@@ -31,9 +31,17 @@ public class TemaController {
 	@Autowired
 	private TemaRepository temaRepository;
 
+	// Procurar todos os temas
 	@GetMapping("/all")
 	public ResponseEntity<List<Tema>> getAll() {
 		return ResponseEntity.ok(temaRepository.findAll());
+	}
+	
+	// Procurar tema por ID
+	@GetMapping("/{id}")
+	public ResponseEntity<Tema> getById(@PathVariable Long id) {
+		return temaRepository.findById(id).map(resposta -> ResponseEntity.ok(resposta))
+		.orElse(ResponseEntity.notFound().build());
 	}
 
 	// Procurar tema por titulo
@@ -48,7 +56,8 @@ public class TemaController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(temaRepository.save(tema));
 
 	}
-
+	
+	// Atualizar tema
 	@PutMapping
 	public ResponseEntity<Tema> put(@Valid @RequestBody Tema tema) {
 		return temaRepository.findById(tema.getId())
@@ -56,15 +65,15 @@ public class TemaController {
 				.orElse(ResponseEntity.notFound().build());
 
 	}
-	
+	// Apagar tema
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
-		Optional <Tema> tema = temaRepository.findById(id);
-		
+		Optional<Tema> tema = temaRepository.findById(id);
+
 		if (tema.isEmpty())
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		
+
 		temaRepository.deleteById(id);
 	}
 }
