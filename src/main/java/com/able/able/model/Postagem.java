@@ -37,6 +37,12 @@ public class Postagem {
 	@Size(max = 50000)
 	private String imagem;
 
+	// Relacionamento
+
+	@ManyToOne
+	@JsonIgnoreProperties("postagem")
+	private Tema tema;
+
 	public Long getId() {
 		return id;
 	}
@@ -76,6 +82,14 @@ public class Postagem {
 
 	public void setImagem(String imagem) {
 		this.imagem = imagem;
+	}
+
+	public Tema getTema() {
+		return tema;
+	}
+
+	public void setTema(Tema tema) {
+		this.tema = tema;
 	}
 
 }
