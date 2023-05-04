@@ -15,7 +15,7 @@ public class Tema {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotNull(message = "O Atributo título é Obrigatório!")
+	@NotNull(message = "O Atributo título é obrigatório!")
 	@Size(min = 5, max = 500, message = "O atributo título deve ter no minimo 05 e no máximo 500 caracteres")
 	private String titulo;
 
